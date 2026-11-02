@@ -6,16 +6,16 @@
 // third-party headers
 #include <soci/soci.h>
 
-// ugreen headers
-#include <ugreen/ugos/core/log/logging.hh>
-#include <ugreen/ugos/core/database/database_connection_pool.hh>
+// cpputils headers
+#include <cpputils/ugos/core/database/database_connection_pool.hh>
+#include <cpputils/ugos/core/log/logging.hh>
 
 // relative headers
 #include "connection_pool.hh"
 #include "database_connection_impl.hh"
 #include "database_connection_pool_impl.hh"
 
-namespace ugreen::core::database {
+namespace cpputils::core::database {
 
 // ============================================================================
 // 数据库实现：DatabaseImpl
@@ -153,4 +153,4 @@ template std::unique_ptr<IDatabaseConnectionPool> create_database_connection_poo
 template std::unique_ptr<IDatabaseConnectionPool> create_database_connection_pool<SQLiteConfig>(
   const SQLiteConfig& config);
 
-}  // namespace ugreen::core::database
+}  // namespace cpputils::core::database

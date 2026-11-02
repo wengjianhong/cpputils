@@ -2,15 +2,15 @@
 #define UGREEN_CORE_DATABASE_RESULT_SET_HH_
 
 /// @file result_set.hh
-/// @author UGreen NAS Team
+/// @author wengjianhong
 /// @brief 数据库查询结果集接口定义
 /// @date 2026-01-20
 /// @copyright Copyright (c) 2026
 /// @details 提供迭代器风格的接口，用于逐行读取查询结果，支持高性能和低内存占用
 
-#include <ugreen/ugos/core/database/row.hh>
+#include <cpputils/ugos/core/database/row.hh>
 
-namespace ugreen::core::database {
+namespace cpputils::core::database {
 
 /// @brief 数据库查询结果集接口（流式处理）
 /// @details 提供迭代器风格的接口，用于逐行读取查询结果，支持高性能和低内存占用
@@ -24,6 +24,6 @@ class IResultSet {
   virtual Row* Fetch() = 0;
 };
 
-}  // namespace ugreen::core::database
+}  // namespace cpputils::core::database
 
 #endif  // UGREEN_CORE_DATABASE_RESULT_SET_HH_

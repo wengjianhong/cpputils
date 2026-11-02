@@ -2,17 +2,17 @@
 #define UGREEN_CORE_DATABASE_DATABASE_HH_
 
 /// @file database_connection_pool.hh
-/// @author UGreen NAS Team
+/// @author wengjianhong
 /// @brief 数据库抽象接口定义
 /// @date 2026-01-20
 /// @copyright Copyright (c) 2026
 
+#include <cpputils/ugos/core/database/database_connection.hh>
+#include <cpputils/ugos/core/database/database_type.hh>
+
 #include <memory>
 
-#include <ugreen/ugos/core/database/database_type.hh>
-#include <ugreen/ugos/core/database/database_connection.hh>
-
-namespace ugreen::core::database {
+namespace cpputils::core::database {
 
 /// @brief 数据库抽象接口（基于 SOCI）
 /// @details 提供数据库连接池管理和 ORM 风格的 CRUD 操作接口
@@ -55,6 +55,6 @@ class IDatabaseConnectionPool {
 template <class ConfigType>
 std::unique_ptr<IDatabaseConnectionPool> create_database_connection_pool(const ConfigType& config);
 
-}  // namespace ugreen::core::database
+}  // namespace cpputils::core::database
 
 #endif  // UGREEN_CORE_DATABASE_DATABASE_HH_

@@ -6,19 +6,19 @@
 #include <vector>
 
 // third-party headers
-#include <soci/soci.h>
 #include <soci/session.h>
+#include <soci/soci.h>
 
-// ugreen headers
-#include <ugreen/ugos/core/common/exception.hh>
-#include <ugreen/ugos/core/log/logging.hh>
+// cpputils headers
+#include <cpputils/ugos/core/common/exception.hh>
+#include <cpputils/ugos/core/log/logging.hh>
 
 // relative headers
+#include "connection_pool.hh"
 #include "database_connection_impl.hh"
 #include "result_set_impl.hh"
-#include "connection_pool.hh"
 
-namespace ugreen::core::database {
+namespace cpputils::core::database {
 
 // ============================================================================
 // SQL 通用辅助函数：SQL 语句构建和转义
@@ -318,4 +318,4 @@ int64_t DatabaseConnectionImpl::Count(const std::string& table_name,
   }
 }
 
-}  // namespace ugreen::core::database
+}  // namespace cpputils::core::database

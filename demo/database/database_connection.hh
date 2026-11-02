@@ -2,22 +2,22 @@
 #define UGREEN_CORE_DATABASE_DATABASE_CONNECTION_HH_
 
 /// @file database_connection.hh
-/// @author UGreen NAS Team
+/// @author wengjianhong
 /// @brief 数据库连接接口定义
 /// @date 2026-01-20
 /// @copyright Copyright (c) 2026
 /// @details 封装单个数据库连接，析构时自动归还连接池
 
-#include <map>
+#include <cpputils/ugos/core/database/result_set.hh>
+
 #include <cstdint>
-#include <vector>
+#include <map>
 #include <memory>
 #include <string>
 #include <string_view>
+#include <vector>
 
-#include <ugreen/ugos/core/database/result_set.hh>
-
-namespace ugreen::core::database {
+namespace cpputils::core::database {
 
 /// @brief 数据库连接接口（RAII 管理）
 /// @details 封装单个数据库连接，析构时自动归还连接池
@@ -103,6 +103,6 @@ class IDatabaseConnection {
   virtual std::string Escape(const std::string& sql) = 0;
 };
 
-}  // namespace ugreen::core::database
+}  // namespace cpputils::core::database
 
 #endif  // UGREEN_CORE_DATABASE_DATABASE_CONNECTION_HH_

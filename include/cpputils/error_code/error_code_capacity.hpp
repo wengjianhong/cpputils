@@ -1,6 +1,6 @@
 /// @file      error_code_capacity.hpp
 /// @brief     错误码分层编码容量
-/// @author    wengjianhong2099@163.com
+/// @author    wengjianhong168@163.com
 /// @date      2026-07-21
 /// @copyright CC BY-NC-SA 4.0
 #ifndef CPPUTILS_ERROR_CODE_ERROR_CODE_CAPACITY_HPP_

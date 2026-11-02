@@ -5,22 +5,20 @@
 #include <cstddef>
 #include <cstdint>
 #include <map>
-#include <memory>
 #include <string>
-#include <string_view>
 #include <vector>
 
 // third-party headers
 #include <soci/connection-pool.h>
 
-// ugreen headers
-#include <ugreen/ugos/core/database/database_connection.hh>
-#include <ugreen/ugos/core/database/database_connection_pool.hh>
-#include <ugreen/ugos/core/database/result_set.hh>
-
+// cpputils headers
 #include "connection_pool.hh"
 
-namespace ugreen::core::database {
+#include <cpputils/ugos/core/database/database_connection.hh>
+#include <cpputils/ugos/core/database/database_connection_pool.hh>
+#include <cpputils/ugos/core/database/result_set.hh>
+
+namespace cpputils::core::database {
 
 /** @brief 数据库连接实现类（RAII 管理）
  * @details 封装单个数据库连接，析构时自动归还连接池
@@ -68,6 +66,6 @@ class DatabaseConnectionImpl : public IDatabaseConnection {
   IConnectionPool* pool_;
 };
 
-}  // namespace ugreen::core::database
+}  // namespace cpputils::core::database
 
 #endif  // UGREEN_CORE_DATABASE_DATABASE_CONNECTION_IMPL_HH_

@@ -2,18 +2,18 @@
 #define UGREEN_CORE_DATABASE_DATABASE_TYPES_HH_
 
 /// @file database_type.hh
-/// @author UGreen NAS Team
+/// @author wengjianhong
 /// @brief 数据库配置和枚举类型定义
 /// @date 2026-01-20
 /// @copyright Copyright (c) 2026
 
-#include <map>
 #include <chrono>
 #include <cstddef>
+#include <map>
 #include <string>
 
 /// @brief 数据库相关功能模块
-namespace ugreen::core::database {
+namespace cpputils::database {
 
 // ============================================================================
 // 数据库类型枚举（内部使用）
@@ -36,10 +36,10 @@ enum class PostgresqlConnectionType {  /// PostgreSQL 连接类型枚举
 struct PostgresqlConfig {
   int port = 5432;                                                /// 端口
   std::string host = "127.0.0.1";                                 /// 服务器地址
-  std::string user = "ugreen";                                    /// 用户名
+  std::string user = "cpputils";                                  /// 用户名
   std::string password = "";                                      /// 密码（空表示 trust 认证）
   std::string database_name = "nasdb";                            /// 数据库名
-  std::string socket_path = "/var/ugreen/postgresql";             /// Unix socket 路径
+  std::string socket_path = "/var/cpputils/postgresql";           /// Unix socket 路径
   std::string ssl_mode = "disable";                               /// SSL 模式
   PostgresqlConnectionType type = PostgresqlConnectionType::TCP;  /// 连接类型
 
@@ -61,6 +61,6 @@ struct SQLiteConfig {
   std::map<std::string, std::string> soci_options = {{"reconnect", "true"}};  /// SOCI 选项（如 {"reconnect", "true"}）
 };
 
-}  // namespace ugreen::core::database
+}  // namespace cpputils::database
 
 #endif  // UGREEN_CORE_DATABASE_DATABASE_TYPES_HH_

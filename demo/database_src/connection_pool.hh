@@ -6,7 +6,6 @@
 #include <cstring>
 #include <map>
 #include <memory>
-#include <sstream>
 #include <string>
 
 // third-party headers
@@ -15,19 +14,21 @@
 #include <soci/statement.h>
 
 // PostgreSQL headers
-#include <libpq-fe.h>
 #include <soci/postgresql/soci-postgresql.h>
+
+#include <libpq-fe.h>
 
 // SQLite headers
 #include <soci/sqlite3/soci-sqlite3.h>
+
 #include <sqlite3.h>
 
-// ugreen headers
-#include <ugreen/ugos/core/common/exception.hh>
-#include <ugreen/ugos/core/database/database_type.hh>
-#include <ugreen/ugos/core/log/logging.hh>
+// cpputils headers
+#include <cpputils/ugos/core/common/exception.hh>
+#include <cpputils/ugos/core/database/database_type.hh>
+#include <cpputils/ugos/core/log/logging.hh>
 
-namespace ugreen::core::database {
+namespace cpputils::core::database {
 
 // ============================================================================
 // 配置相关：数据库类型 Traits（用于提取数据库特定逻辑）
@@ -43,7 +44,9 @@ struct DatabaseTraits;
 template <>
 struct DatabaseTraits<DatabaseType::POSTGRESQL> {
   using ConfigType = PostgresqlConfig;
-  static constexpr const char* BackendName() { return "postgresql"; }
+  static constexpr const char* BackendName() {
+    return "postgresql";
+  }
 
   static std::string BuildConnectString(const PostgresqlConfig& cfg) {
     std::ostringstream ss;
@@ -76,20 +79,30 @@ struct DatabaseTraits<DatabaseType::POSTGRESQL> {
     return (cfg.max_connection_size > 0) ? cfg.max_connection_size : 1;
   }
 
-  static bool ShouldLogSlowQuery(const PostgresqlConfig& cfg) { return cfg.slow_query_threshold.count() > 0; }
+  static bool ShouldLogSlowQuery(const PostgresqlConfig& cfg) {
+    return cfg.slow_query_threshold.count() > 0;
+  }
 
-  static int64_t GetSlowQueryThreshold(const PostgresqlConfig& cfg) { return cfg.slow_query_threshold.count(); }
+  static int64_t GetSlowQueryThreshold(const PostgresqlConfig& cfg) {
+    return cfg.slow_query_threshold.count();
+  }
 
-  static int64_t GetAffectedRows(soci::statement& st, soci::session& /*session*/) { return st.get_affected_rows(); }
+  static int64_t GetAffectedRows(soci::statement& st, soci::session& /*session*/) {
+    return st.get_affected_rows();
+  }
 };
 
 /// SQLite traits 特化
 template <>
 struct DatabaseTraits<DatabaseType::SQLITE3> {
   using ConfigType = SQLiteConfig;
-  static constexpr const char* BackendName() { return "sqlite3"; }
+  static constexpr const char* BackendName() {
+    return "sqlite3";
+  }
 
-  static std::string BuildConnectString(const SQLiteConfig& cfg) { return cfg.database_path; }
+  static std::string BuildConnectString(const SQLiteConfig& cfg) {
+    return cfg.database_path;
+  }
 
   static std::size_t GetPoolSize(const SQLiteConfig& cfg) {
     return (cfg.max_connection_size > 0) ? cfg.max_connection_size : 1;
@@ -99,7 +112,9 @@ struct DatabaseTraits<DatabaseType::SQLITE3> {
     return false;  // SQLite 不支持慢查询日志
   }
 
-  static int64_t GetSlowQueryThreshold(const SQLiteConfig&) { return 0; }
+  static int64_t GetSlowQueryThreshold(const SQLiteConfig&) {
+    return 0;
+  }
 
   static int64_t GetAffectedRows(soci::statement& st, soci::session& session) {
     int64_t affected = st.get_affected_rows();
@@ -129,7 +144,7 @@ struct IConnectionPool {
   virtual bool ShouldLogSlowQuery() const = 0;
   virtual int64_t GetSlowQueryThreshold() const = 0;
   virtual std::size_t GetPoolSize() const = 0;
-  virtual ::ugreen::core::database::DatabaseType GetDatabaseType() const = 0;
+  virtual ::cpputils::core::database::DatabaseType GetDatabaseType() const = 0;
   virtual std::string EscapeIdentifier(const std::string& identifier, soci::session* session) const = 0;
 };
 
@@ -169,13 +184,21 @@ struct ConnectionPool : public IConnectionPool {
     }
   }
 
-  bool IsInitialized() const override { return Initialized_.load(); }
+  bool IsInitialized() const override {
+    return Initialized_.load();
+  }
 
-  soci::connection_pool* GetPool() const override { return Pool_.get(); }
+  soci::connection_pool* GetPool() const override {
+    return Pool_.get();
+  }
 
-  const soci::connection_parameters* GetParams() const override { return Params_.get(); }
+  const soci::connection_parameters* GetParams() const override {
+    return Params_.get();
+  }
 
-  ::ugreen::core::database::DatabaseType GetDatabaseType() const override { return Type; }
+  ::cpputils::core::database::DatabaseType GetDatabaseType() const override {
+    return Type;
+  }
 
   std::string EscapeIdentifier(const std::string& identifier, soci::session* session) const override {
     if (!session) {
@@ -227,11 +250,17 @@ struct ConnectionPool : public IConnectionPool {
     return Traits::GetAffectedRows(st, session);
   }
 
-  bool ShouldLogSlowQuery() const override { return Traits::ShouldLogSlowQuery(Config_); }
+  bool ShouldLogSlowQuery() const override {
+    return Traits::ShouldLogSlowQuery(Config_);
+  }
 
-  int64_t GetSlowQueryThreshold() const override { return Traits::GetSlowQueryThreshold(Config_); }
+  int64_t GetSlowQueryThreshold() const override {
+    return Traits::GetSlowQueryThreshold(Config_);
+  }
 
-  std::size_t GetPoolSize() const override { return PoolSize_; }
+  std::size_t GetPoolSize() const override {
+    return PoolSize_;
+  }
 
   /// 关闭连接池
   void Shutdown() noexcept {
@@ -244,6 +273,6 @@ struct ConnectionPool : public IConnectionPool {
   }
 };
 
-}  // namespace ugreen::core::database
+}  // namespace cpputils::core::database
 
 #endif  // UGREEN_CORE_DATABASE_CONNECTION_POOL_HH_

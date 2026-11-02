@@ -2,21 +2,23 @@
 #define UGREEN_CORE_DATABASE_ROW_HH_
 
 /// @file row.hh
-/// @author UGreen NAS Team
+/// @author wengjianhong
 /// @brief 数据库行接口定义
 /// @date 2026-01-20
 /// @copyright Copyright (c) 2026
 /// @details 提供对单行数据的访问接口，支持按列名或下标访问字段值
 
-#include <cstddef>
-#include <string>
-#include <sstream>
-#include <optional>
+#include <cpputils/ugos/core/common/exception.hh>
+
 #include <soci/row.h>
-#include <ugreen/ugos/core/common/exception.hh>
+
+#include <cstddef>
+#include <optional>
+#include <sstream>
+#include <string>
 
 /// @brief 数据库相关功能模块
-namespace ugreen::core::database {
+namespace cpputils::core::database {
 
 inline std::string soci_db_type_to_str(soci::data_type dt) {
   switch (dt) {
@@ -41,9 +43,9 @@ inline std::string soci_db_type_to_str(soci::data_type dt) {
   return "unknown " + std::to_string(static_cast<int>(dt));
 }
 /// @brief database exception
-class DatabaseException : public ugreen::core::common::Exception {
+class DatabaseException : public cpputils::core::common::Exception {
  public:
-  using ugreen::core::common::Exception::Exception;
+  using cpputils::core::common::Exception::Exception;
 };
 
 /// @brief DatabaseBadCast exception
@@ -113,7 +115,9 @@ class Row {
     }
   }
 
-  void SetRow(const soci::row* row) { row_ = row; }
+  void SetRow(const soci::row* row) {
+    row_ = row;
+  }
 
  private:
   template <typename CT>
@@ -132,6 +136,6 @@ class Row {
   Row& operator=(Row&&) = delete;
   const soci::row* row_;
 };
-}  // namespace ugreen::core::database
+}  // namespace cpputils::core::database
 
 #endif  // UGREEN_CORE_DATABASE_ROW_HH_

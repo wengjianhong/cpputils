@@ -1,14 +1,14 @@
 #ifndef UGREEN_CORE_DATABASE_DATABASE_IMPL_HH_
 #define UGREEN_CORE_DATABASE_DATABASE_IMPL_HH_
 
+#include <cpputils/ugos/core/database/database_connection.hh>
+#include <cpputils/ugos/core/database/database_connection_pool.hh>
+#include <cpputils/ugos/core/database/database_type.hh>
+
 #include <memory>
 #include <variant>
 
-#include <ugreen/ugos/core/database/database_type.hh>
-#include <ugreen/ugos/core/database/database_connection.hh>
-#include <ugreen/ugos/core/database/database_connection_pool.hh>
-
-namespace ugreen::core::database {
+namespace cpputils::core::database {
 
 // 前向声明
 struct IConnectionPool;
@@ -47,6 +47,6 @@ class DatabaseImpl : public IDatabaseConnectionPool {
   IConnectionPool* GetPoolPtr() const;
 };
 
-}  // namespace ugreen::core::database
+}  // namespace cpputils::core::database
 
 #endif  // UGREEN_CORE_DATABASE_DATABASE_IMPL_HH_

@@ -1,18 +1,21 @@
 #ifndef UGREEN_CORE_DATABASE_RESULT_SET_IMPL_HH_
 #define UGREEN_CORE_DATABASE_RESULT_SET_IMPL_HH_
 
+#include <cpputils/ugos/core/database/result_set.hh>
+
 #include <soci/row.h>
 #include <soci/rowset.h>
-#include <ugreen/ugos/core/database/result_set.hh>
 
-namespace ugreen::core::database {
+namespace cpputils::core::database {
 
 /** @brief 查询结果集实现类（流式处理，高性能）
  * @details 封装 SOCI rowset，支持逐行读取，不一次性加载所有数据
  */
 class ResultSetImpl : public IResultSet {
  public:
-  ResultSetImpl(soci::rowset<soci::row>&& rowset) : rowset_(std::move(rowset)) { current_it_ = rowset_.begin(); }
+  ResultSetImpl(soci::rowset<soci::row>&& rowset) : rowset_(std::move(rowset)) {
+    current_it_ = rowset_.begin();
+  }
   virtual ~ResultSetImpl() noexcept override = default;
 
   Row* Fetch() override {
@@ -44,6 +47,6 @@ class ResultSetImpl : public IResultSet {
   mutable Row current_row_;  // 当前行的实现对象（通过指针引用 current_ 指向的 row）
 };
 
-}  // namespace ugreen::core::database
+}  // namespace cpputils::core::database
 
 #endif  // UGREEN_CORE_DATABASE_RESULT_SET_IMPL_HH_
